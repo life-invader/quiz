@@ -1,0 +1,30 @@
+.home {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.start-button {
+  margin-top: 25px;
+
+  width: 100%;
+  font-size: 16px;
+  color: #fff;
+  background-color: #252d4a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  padding: 5px;
+  cursor: pointer;
+  border: 2px solid #234668;
+  margin: 5px 0;
+  outline: none;
+
+  &:hover {
+    background: #234668;
+    transition: all 0.3 ease;
+  }
+}
