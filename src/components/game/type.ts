@@ -2,7 +2,10 @@ import { IQuestion } from "../../types/question";
 
 export type GameType = {
   question: IQuestion,
-  handleAnswerClick: (isCorrect: boolean) => void,
+  handleNextButtonClick: () => void,
+  handlePrevButtonClick: () => void,
   currentQuestion: number,
   questionsAmount: number,
+  nextButtonDisabled: boolean;
+  prevButtonDisabled: boolean;
 };
