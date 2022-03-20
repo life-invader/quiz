@@ -1,72 +1,57 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsPlaying, setNextQuestion, setPrevQuestion } from '../../store/appSlice';
+import { RootState } from '../../store/store';
 import Game from '../game/game';
 import Home from '../home/home';
 import Result from '../result/result';
 import type { GameContainerType } from './type';
 
 function GameContainer({ questions }: GameContainerType) {
-  const [currentQuestion, setCurrentQuestion] = useState(0); // Текущий вопрос
-  const [score, setScore] = useState(0); // Общий балл
-  const [showScore, setShowScore] = useState(false); // Отобразить результат ( да / нет )
-  const [showHome, setShowHome] = useState(true); // Отобразить главный экран ( да / нет )
+  const dispatch = useDispatch();
+  const isPlaying = useSelector((state: RootState) => state.isPlaying);
+  const currentQuestion = useSelector((state: RootState) => state.currentQuestion);
+  const isLast = useSelector((state: RootState) => state.currentQuestion.isLast);
+  const isFirst = useSelector((state: RootState) => state.currentQuestion.isFirst);
 
-  const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
-  const [prevButtonDisabled, setPrevButtonDisabled] = useState(false);
+  const [showResult, setShowResult] = useState(false); // Показать результаты ? ( да / нет )
 
+  // Старт игры, убираем главный экран, показываем вопросы
   const startGame = () => {
-    setShowHome(false);
+    dispatch(setIsPlaying(true));
   }
 
   const handleNextButtonClick = () => {
-    setCurrentQuestion((prevState) => prevState + 1);
+    dispatch(setNextQuestion());
   }
 
   const handlePrevButtonClick = () => {
-    setCurrentQuestion((prevState) => prevState - 1);
+    dispatch(setPrevQuestion());
   }
 
-  const handleRefresh = () => {
-    setShowScore(false);
-    setCurrentQuestion(0);
+  const handleExitButtonClick = () => {
+    console.log('Exit!');
   }
-
-  useEffect(() => {
-    setNextButtonDisabled(false);
-    setPrevButtonDisabled(false);
-
-    if ((currentQuestion + 1) === questions.length) {
-      setNextButtonDisabled(true);
-    }
-
-    if (currentQuestion === 0) {
-      setPrevButtonDisabled(true);
-    }
-  }, [currentQuestion, questions.length])
-
 
   return (
     < >
       {
-        showHome && <Home startGame={startGame} />
+        !isPlaying && <Home startGame={startGame} />
       }
       {
-        (!showScore && !showHome) &&
-        <Game question={questions[currentQuestion]}
+        isPlaying &&
+        <Game
+          question={questions[currentQuestion.position]}
+          isLast={isLast}
+          isFirst={isFirst}
           handleNextButtonClick={handleNextButtonClick}
           handlePrevButtonClick={handlePrevButtonClick}
-          currentQuestion={currentQuestion + 1}
-          questionsAmount={questions.length}
-          nextButtonDisabled={nextButtonDisabled}
-          prevButtonDisabled={prevButtonDisabled}
+          handleExitButtonClick={handleExitButtonClick}
         />
       }
       {
-        showScore &&
-        <Result
-          totalScore={score}
-          questionsAmount={questions.length}
-          handleRefresh={handleRefresh}
-        />
+        showResult &&
+        <Result />
       }
     </>
   );

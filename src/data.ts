@@ -2,100 +2,104 @@ import { IQuestion } from './types/question';
 
 export const QUESTIONS: IQuestion[] = [
   {
+    id: 'question-id-1',
     question: 'Текст первого вопроса',
     answerOptions: [
       {
-        id: 1,
+        id: 'answer-id-1',
         text: 'Текст ответа 1',
         isCorrect: true,
       },
       {
-        id: 2,
+        id: 'answer-id-2',
         text: 'Текст ответа 2',
         isCorrect: false,
       },
       {
-        id: 3,
+        id: 'answer-id-3',
         text: 'Текст ответа 3',
         isCorrect: false,
       },
       {
-        id: 4,
+        id: 'answer-id-4',
         text: 'Текст ответа 4',
         isCorrect: false,
       },
     ],
   },
   {
+    id: 'question-id-2',
     question: 'Текст второго вопроса',
     answerOptions: [
       {
-        id: 1,
+        id: 'answer-id-1',
         text: 'Текст ответа 1',
-        isCorrect: false,
+        isCorrect: true,
       },
       {
-        id: 2,
+        id: 'answer-id-2',
         text: 'Текст ответа 2',
         isCorrect: false,
       },
       {
-        id: 3,
+        id: 'answer-id-3',
         text: 'Текст ответа 3',
-        isCorrect: true,
+        isCorrect: false,
       },
       {
-        id: 4,
+        id: 'answer-id-4',
         text: 'Текст ответа 4',
         isCorrect: false,
       },
     ],
   },
   {
+    id: 'question-id-3',
     question: 'Текст третьего вопроса',
     answerOptions: [
       {
-        id: 1,
+        id: 'answer-id-1',
         text: 'Текст ответа 1',
-        isCorrect: false,
+        isCorrect: true,
       },
       {
-        id: 2,
+        id: 'answer-id-2',
         text: 'Текст ответа 2',
         isCorrect: false,
       },
       {
-        id: 3,
+        id: 'answer-id-3',
         text: 'Текст ответа 3',
         isCorrect: false,
       },
       {
-        id: 4,
+        id: 'answer-id-4',
         text: 'Текст ответа 4',
-        isCorrect: true,
+        isCorrect: false,
       },
     ],
   },
   {
+    id: 'question-id-4',
     question: 'Текст четвертого вопроса',
     answerOptions: [
       {
-        id: 1,
+        id: 'answer-id-1',
         text: 'Текст ответа 1',
-        isCorrect: false,
-      },
-      {
-        id: 2,
-        text: 'Текст ответа 2',
         isCorrect: true,
       },
       {
-        id: 3,
+        id: 'answer-id-2',
+        text: 'Текст ответа 2',
+        isCorrect: false,
+      },
+      {
+        id: 'answer-id-3',
         text: 'Текст ответа 3',
         isCorrect: false,
       },
       {
-        id: 4,
+        id: 'answer-id-4',
         text: 'Текст ответа 4',
         isCorrect: false,
       },

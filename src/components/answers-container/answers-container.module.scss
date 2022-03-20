@@ -1,0 +1,48 @@
+.button-wrapper {
+  input[type="radio"] {
+    display: none;
+
+    &:checked + label {
+      color: #fff;
+      background: #fcc822;
+    }
+
+    &:disabled + label {
+      background: #efefef;
+      color: #666;
+    }
+  }
+
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 85px;
+    text-align: center;
+
+    color: #000000;
+    font-size: 21px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #d1d1d1;
+
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    span {
+      position: absolute;
+      top: 1px;
+      left: 5px;
+
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    &:hover {
+      color: #fff;
+      background: #cf1f16;
+    }
+  }
+}

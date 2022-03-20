@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import AnswersContainer from '../answers-container/answers-container';
 import styles from './game.module.scss';
 import type { GameType } from './type';
 
-function Game({ question, handleNextButtonClick, currentQuestion, questionsAmount, nextButtonDisabled, prevButtonDisabled, handlePrevButtonClick }: GameType) {
-  const [answerChecked, setAnswerChecked] = useState(false);
-  const [currentAnswer, setCurrentAnswer] = useState<string>('');
+function Game({ question, handleNextButtonClick, handlePrevButtonClick, isLast, isFirst, handleExitButtonClick }: GameType) {
+  const [currentAnswer, setCurrentAnswer] = useState('');
 
-  const handleRadioClick = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(evt.target);
+  const handleAnswerClick = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentAnswer(evt.target.value);
-    setAnswerChecked(true);
   }
 
   useEffect(() => {
-    setCurrentAnswer('-1');
-    setAnswerChecked(false);
+    setCurrentAnswer('');
   }, [question.question])
 
 
@@ -24,17 +21,11 @@ function Game({ question, handleNextButtonClick, currentQuestion, questionsAmoun
         <p className={styles.question}>{question.question}</p>
         <div className={styles.answers}>
 
-          {
-            question.answerOptions.map((answer, index) => (
-              <div key={answer.id} className={styles['button-wrapper']}>
-                <input type="radio" name='question' id={`radio-${index}`} checked={currentAnswer === String(answer.id)} value={answer.id} onChange={handleRadioClick} />
-                <label htmlFor={`radio-${index}`}>
-                  <span>{index + 1}.</span>
-                  {answer.text}
-                </label>
-              </div>
-            ))
-          }
+          <AnswersContainer
+            answers={question.answerOptions}
+            currentAnswer={currentAnswer}
+            handleAnswerClick={handleAnswerClick}
+          />
 
         </div>
 
@@ -42,17 +33,31 @@ function Game({ question, handleNextButtonClick, currentQuestion, questionsAmoun
           <button
             className={styles['navigation-button-previous']}
             onClick={handlePrevButtonClick}
-            disabled={prevButtonDisabled}
+            disabled={isFirst}
           >
             Previous
           </button>
-          <button
-            className={styles['navigation-button-next']}
-            onClick={handleNextButtonClick}
-            disabled={(nextButtonDisabled || !answerChecked) ? true : false}
-          >
-            Next
-          </button>
+
+          {
+            !isLast
+              ?
+              <button
+                className={styles['navigation-button-next']}
+                onClick={handleNextButtonClick}
+                disabled={(isLast || !currentAnswer) ? true : false}
+              >
+                Next
+              </button>
+              :
+              <button
+                className={styles['navigation-button-next']}
+                onClick={handleExitButtonClick}
+                disabled={!currentAnswer}
+              >
+                End
+              </button>
+          }
+
         </div>
 
       </div>
