@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import AnswersContainer from '../answers-container/answers-container';
 import styles from './game.module.scss';
 import type { GameType } from './type';
+import cs from 'classnames';
 
-function Game({ question, handleNextButtonClick, handlePrevButtonClick, isLast, isFirst, handleExitButtonClick }: GameType) {
+function Game({ question, handleNextButtonClick, handlePrevButtonClick, isLast, isFirst, handleExitButtonClick, userAnswers }: GameType) {
   const [currentAnswer, setCurrentAnswer] = useState('');
 
   const handleAnswerClick = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +30,24 @@ function Game({ question, handleNextButtonClick, handlePrevButtonClick, isLast, 
 
         </div>
 
+        <div className={styles['game-navigation']}>
+
+          {
+            userAnswers.map((_item, index) => {
+              const classNames = cs({
+                'game-navigation-item': _item === null,
+                'game-navigation-item-correct': _item,
+                'game-navigation-item-wrong': _item === false,
+              })
+
+              return (
+                <div className={styles[classNames]} data-index={index}></div>
+              )
+            })
+          }
+
+        </div>
+
         <div className={styles['game-screen-bottom']}>
           <button
             className={styles['navigation-button-previous']}
@@ -43,7 +62,7 @@ function Game({ question, handleNextButtonClick, handlePrevButtonClick, isLast, 
               ?
               <button
                 className={styles['navigation-button-next']}
-                onClick={handleNextButtonClick}
+                onClick={handleNextButtonClick(currentAnswer)}
                 disabled={(isLast || !currentAnswer) ? true : false}
               >
                 Next
@@ -51,7 +70,7 @@ function Game({ question, handleNextButtonClick, handlePrevButtonClick, isLast, 
               :
               <button
                 className={styles['navigation-button-next']}
-                onClick={handleExitButtonClick}
+                onClick={handleExitButtonClick(currentAnswer)}
                 disabled={!currentAnswer}
               >
                 End

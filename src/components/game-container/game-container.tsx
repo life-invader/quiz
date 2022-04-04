@@ -11,8 +11,11 @@ function GameContainer({ questions }: GameContainerType) {
   const dispatch = useDispatch();
   const isPlaying = useSelector((state: RootState) => state.isPlaying);
   const currentQuestion = useSelector((state: RootState) => state.currentQuestion);
+  const questionsAmount = useSelector((state: RootState) => state.questions.length);
   const isLast = useSelector((state: RootState) => state.currentQuestion.isLast);
   const isFirst = useSelector((state: RootState) => state.currentQuestion.isFirst);
+  const result = useSelector((state: RootState) => state.totalScore);
+  const userAnswers = useSelector((state: RootState) => state.userAnswers);
 
   const [showResult, setShowResult] = useState(false); // Показать результаты ? ( да / нет )
 
@@ -21,16 +24,25 @@ function GameContainer({ questions }: GameContainerType) {
     dispatch(setIsPlaying(true));
   }
 
-  const handleNextButtonClick = () => {
-    dispatch(setNextQuestion());
+  const handleNextButtonClick = (answer: string) => {
+    return () => {
+      dispatch(setNextQuestion(answer));
+    }
   }
 
   const handlePrevButtonClick = () => {
     dispatch(setPrevQuestion());
   }
 
-  const handleExitButtonClick = () => {
-    console.log('Exit!');
+  const handleExitButtonClick = (answer: string) => {
+    return () => {
+      dispatch(setNextQuestion(answer));
+      setShowResult(true);
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowResult(false);
   }
 
   return (
@@ -47,11 +59,15 @@ function GameContainer({ questions }: GameContainerType) {
           handleNextButtonClick={handleNextButtonClick}
           handlePrevButtonClick={handlePrevButtonClick}
           handleExitButtonClick={handleExitButtonClick}
+          userAnswers={userAnswers}
         />
       }
       {
         showResult &&
-        <Result />
+        <Result
+          onExitClick={handleCloseModal}
+          result={result}
+        />
       }
     </>
   );

@@ -4,7 +4,8 @@ export type GameType = {
   question: IQuestion,
   isLast: boolean;
   isFirst: boolean;
-  handleNextButtonClick: () => void,
+  handleNextButtonClick: (answer: string) => () => void,
   handlePrevButtonClick: () => void,
-  handleExitButtonClick: () => void,
+  handleExitButtonClick: (answer: string) => () => void,
+  userAnswers: boolean[]
 };
